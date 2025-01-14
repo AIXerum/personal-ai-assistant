@@ -4,9 +4,14 @@ langchain_community
 langchain-openai
 langchain-google-genai 
 langchain-groq 
+langsmith
+tavily-python
 notion-client
+slack_sdk
 google-auth
 google-auth-oauthlib
 google-auth-httplib2
 google-api-python-client
 python-dotenv
+html2text
+bs4

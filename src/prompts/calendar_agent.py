@@ -26,7 +26,7 @@ to read or write emails to my contacts.
 
 * **GetCalendarEvents:** Use this tool to retrieve all calendars events between 2 time periods from my calendar.
 
-* **CreateEvent:** Use this tool to create a new event in my calendar.
+* **AddEventToCalendar:** Use this tool to add a new event in my calendar.
 
 **# Notes**
 
