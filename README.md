@@ -1,10 +1,16 @@
 # AI Personal Assistant
 
-**Imagine a personal assistant in your pocket 📱 that handles your emails 📧, schedule 📅, to-do lists ✅, keeps you updated on Slack messages 💬, and performs online research for you 🔍—all through your favorite messaging app. That's what this AI Personal Assistant does! 🤖✨**
+**Imagine a personal assistant in your pocket 📱 that handles your emails 📧, schedule 📅, to-do lists ✅, keeps you updated on Slack messages 💬, and performs online research for you 🔍—all through your favorite messaging app.**
 
-This project provides a personal assistant agent that manages tasks related to your email inbox, calendar, Notion to-do list, Slack interactions, and handle any research you may have. The assistant communicates with you via your preferred communication channel (Telegram, Slack, or WhatsApp), keeping you informed about your schedule, tasks, emails, messages, and helping your research topics, people or even companies.
+**That's EXACTLY what this AI Personal Assistant does! 🤖✨**
 
-The personal assistant is a hierarchical multi-agents system with a supervisor agent (manager) and several sub-agents that handle specific tasks and tools for efficient task management.
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/c284eb2d-1909-48cd-9ab7-b0fbe4709308" alt="personal_assistant" width="900" height="700">
+</p>
+
+This project provides a personal assistant agent that manages tasks related to your email inbox, calendar, Notion to-do list, Slack interactions, and handles any research you may have. The assistant communicates with you via your preferred communication channel **(Telegram, Slack, or WhatsApp)**, keeping you informed about your schedule, tasks, emails, messages, and helping with research topics, people, or even companies.
+
+The personal assistant is a **hierarchical multi-agents** system with a **supervisor agent** (manager) and several sub-agents that handle specific tasks and tools for efficient task management.
 
 ## Overview
 
@@ -18,7 +24,7 @@ The Assistant Manager is your personal assistant that orchestrates the tasks and
 
 ### Sub-Agents
 
-The project includes five specialized sub-agents:
+The manager agent can communicate with five specialized sub-agents:
 
 1.  **Email Agent:** Can handle all your email-related tasks, including sending emails, retrieving specific emails, and checking for important messages from your contacts list.
 2.  **Calendar Agent:** Can manage your calendar by creating new events and retrieving and checking your scheduled events.
@@ -108,7 +114,7 @@ All the sub-agents report back to the Assistant Manager after completing their r
     - For running the personal assistant on **whatsApp** you'll need to run:
 
       ```bash
-      python run app_whatsapp
+      python run app_whatsapp.py
       ```
 
       This will spin out a local fastAPI server, to enable the communication with the Twilio servers you need to make it public using **Ngrok**:
