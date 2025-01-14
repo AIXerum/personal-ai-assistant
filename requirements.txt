@@ -8,10 +8,16 @@ langsmith
 tavily-python
 notion-client
 slack_sdk
+twilio
 google-auth
 google-auth-oauthlib
 google-auth-httplib2
 google-api-python-client
+fastapi
+uvicorn
+python-multipart
 python-dotenv
+selenium
+webdriver_manager
 html2text
 bs4

@@ -5,7 +5,8 @@ import requests
 import html2text
 import time
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from langsmith import traceable
@@ -67,17 +68,20 @@ def scrape_linkedin(linkedin_url):
     Scrapes the LinkedIn profile page and returns the HTML content.
     """
     # Set up the Chrome WebDriver with headless mode
-    options = Options()
+    service = Service(ChromeDriverManager().install())
+    options = webdriver.ChromeOptions()
     options.add_argument("--headless")
-    driver = webdriver.Chrome(options=options)
+    
+    # Launch Chrome
+    driver = webdriver.Chrome(service=service, options=options)
     
     # Log in to LinkedIn
     driver.get("https://www.linkedin.com/login")
     time.sleep(5)
     username = driver.find_element(By.ID, "username")
     password = driver.find_element(By.ID, "password")
-    username.send_keys("schmitwinston777@gmail.com")  # Replace with your email
-    password.send_keys("TheNewGirl@2025")  # Replace with your password
+    username.send_keys(os.getenv("LINKEDIN_USERNAME"))  # Replace with your email
+    password.send_keys(os.getenv("LINKEDIN_PASSWORD"))  # Replace with your password
     password.send_keys(Keys.RETURN)
     time.sleep(5)  # Wait for the login to complete
 

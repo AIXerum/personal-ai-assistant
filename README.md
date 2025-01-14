@@ -1,8 +1,8 @@
 # AI Personal Assistant
 
-**Imagine a personal assistant in your pocket 📱 that handles your emails 📧, schedule 📅, to-do lists ✅, keeps you updated on Slack messages 💬, and performs web research 🔍—all through your favorite messaging app. That's what this AI Personal Assistant does! 🤖✨**
+**Imagine a personal assistant in your pocket 📱 that handles your emails 📧, schedule 📅, to-do lists ✅, keeps you updated on Slack messages 💬, and performs online research for you 🔍—all through your favorite messaging app. That's what this AI Personal Assistant does! 🤖✨**
 
-This project provides a personal assistant agent that manages tasks related to your email inbox, calendar, Notion to-do list, Slack interactions, and handle any research you may have. The assistant communicates with you via your preferred communication channel (Telegram, Slack, or WhatsApp), keeping you informed about your schedule, tasks, emails, messages, and helping your research topics, people or even companies. 
+This project provides a personal assistant agent that manages tasks related to your email inbox, calendar, Notion to-do list, Slack interactions, and handle any research you may have. The assistant communicates with you via your preferred communication channel (Telegram, Slack, or WhatsApp), keeping you informed about your schedule, tasks, emails, messages, and helping your research topics, people or even companies.
 
 The personal assistant is a hierarchical multi-agents system with a supervisor agent (manager) and several sub-agents that handle specific tasks and tools for efficient task management.
 
@@ -36,21 +36,21 @@ All the sub-agents report back to the Assistant Manager after completing their r
 -   **Notion Client**: Interface for interacting with Notion to manage and update to-do lists.
 -   **Slack SDK**: For interacting with Slack, sending and receiving messages.
 -   **Tavily Search API**: For performing web searches.
--   **[Optional] Telegram API**: Depending on your choice of communication channel.
--   **WhatsApp API (not implemented)**
+-   **Telegram API**: Depending on your choice of communication channel.
+-   **WhatsApp API via Twilio Sandbox (for testing)**: A way to integrate WhatsApp communication.
 
 ## How to Run
 
 ### Prerequisites
 
 -   Python 3.9+
+-   Your preferred LLM provider API keys (OpenAI, Claude, Gemini, Groq,...)
 -   Google API credentials (for Calendar, Contacts, and Gmail access)
 -   Notion API key
--   Groq API key (for Llama 3)
--   Google Gemini API key (for using the Gemini model)
 -   Tavily API key (for web research)
 -   Slack Bot User OAuth Token and App Token
--   [Optional] Telegram Bot Token
+-   Telegram Bot Token (If you want to use telegram)
+-   Twilio Account SID and Auth Token (If you want to test with WhatsApp)
 -   Necessary Python libraries (listed in `requirements.txt`)
 
 ### Setup
@@ -81,28 +81,53 @@ All the sub-agents report back to the Assistant Manager after completing their r
 
 5.  **Configure Google API credentials:**
 
-    Follow Google's documentation to set up credentials for Calendar, Contacts, and Gmail APIs. Save the credentials file in a secure location and update the path in the configuration file.
+    Follow Google's documentation to set up credentials for Calendar, Contacts, and Gmail APIs. Save the credentials file in your project folder.
 
 6.  **Set up Communication Channel:**
 
     -   **Telegram:**
         -   Create a Telegram Bot: To interact with the assistant via Telegram, you will need to create a Telegram bot and obtain the bot token. Follow this [guide](https://www.youtube.com/watch?v=ozQfKhdNjJU) to create your bot and get the necessary information.
     -   **Slack:**
-        -   Create a Slack App: Follow the official Slack documentation to create a new Slack app, enable Socket Mode, Event Subscriptions, and add the necessary OAuth scopes (refer to the provided code and documentation for the required scopes).
+        -   Create a Slack App: Follow the official Slack documentation to create a new Slack app, add the necessary OAuth scopes (refer to the provided code and documentation for the required scopes).
         -   Install the app to your workspace and obtain your Bot User OAuth Token and App-Level Token.
-    -   **WhatsApp (not implemented):**
-        -   Would require setting up WhatsApp Business API (requires a business account and potentially a third-party provider).
-        -   Configuration of webhooks to receive messages would also be necessary.
+    -   **WhatsApp (via Twilio Sandbox for Testing):**
+        - **Important Note:** Normally, interacting with the **WhatsApp Business API** requires a **Meta Business Account**. However, for **testing purposes only**, this project utilizes the Twilio WhatsApp Sandbox.
+        - **Twilio Sandbox Limitations:**  As stated in the [Twilio documentation](https://www.twilio.com/docs/whatsapp/sandbox), "Use the Twilio Sandbox for WhatsApp for testing and discovery purposes only. You should not use it in production."
+        - **Setup:**
+          1.  Create a Twilio account and obtain your Account SID and Auth Token.
+          2.  Follow Twilio's tutorial to set up the WhatsApp Sandbox: [Twilio WhatsApp Sandbox Setup](https://www.twilio.com/docs/whatsapp/sandbox).
+          3.  Save your Twilio Account SID, Auth Token and Sandbox number in your `.env` file.
 
 7.  **Run the project**:
+    - For running the personal assistant on **Slack or Telegram** you'll only need to run:
 
-    ```bash
-    python main.py
-    ```
+      ```bash
+      python app.py
+      ```
+
+    - For running the personal assistant on **whatsApp** you'll need to run:
+
+      ```bash
+      python run app_whatsapp
+      ```
+
+      This will spin out a local fastAPI server, to enable the communication with the Twilio servers you need to make it public using **Ngrok**:
+
+      1. Expose the Webhook URL Using ngrok
+
+         ```bash
+         ngrok http 5000
+         ```
+      2. Configure Twilio Webhook
+
+         1. Go to the Twilio Console > Messaging > Sandbox for WhatsApp.
+         2. In the Sandbox settings section: Set the "WHEN A MESSAGE COMES IN" URL to your ngrok URL and save your configuration.
+      
+      **You're done now you can talk with your assistant via whatsApp**
 
 ### Usage
 
--   **Communicating with the Assistant**: Simply send a message to your configured communication channel (Telegram bot, Slack workspace, or WhatsApp number (not implemented)), and the assistant will analyze the message, delegate the task to the appropriate sub-agent, and report back with the results.
+**Communicating with the Assistant**: Simply send a message to your configured communication channel (Telegram, Slack channel, or WhatsApp), and the assistant will analyze the message, delegate the tasks to the appropriate sub-agents, and report back to you with the results.
 
 ## Contribution
 
