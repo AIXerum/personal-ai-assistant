@@ -5,7 +5,7 @@
 **That's EXACTLY what this AI Personal Assistant does! 🤖✨**
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/c284eb2d-1909-48cd-9ab7-b0fbe4709308" alt="personal_assistant" width="900" height="700">
+  <img src="https://github.com/user-attachments/assets/c284eb2d-1909-48cd-9ab7-b0fbe4709308" alt="personal_assistant">
 </p>
 
 This project provides a personal assistant agent that manages tasks related to your email inbox, calendar, Notion to-do list, Slack interactions, and handles any research you may have. The assistant communicates with you via your preferred communication channel **(Telegram, Slack, or WhatsApp)**, keeping you informed about your schedule, tasks, emails, messages, and helping with research topics, people, or even companies.
