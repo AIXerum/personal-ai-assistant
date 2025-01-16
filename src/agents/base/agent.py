@@ -1,6 +1,5 @@
 from typing import List
 from langgraph.prebuilt import create_react_agent
-from langgraph.checkpoint.memory import MemorySaver
 from src.utils import get_llm_by_provider
 
 class Agent:
@@ -12,7 +11,8 @@ class Agent:
         tools: List[str],  # List of tools that the agent can use
         sub_agents: List['Agent'],  # List of sub-agents that the main agent can sned message to
         model: str,  # LLM model (in provider/model format e.g., "openai/gpt-4o", "gemini/gemini-1.5-flash")
-        temperature: float  # Temperature setting for the LLM (affects creativity/randomness)
+        temperature: float,  # Temperature setting for the LLM (affects creativity/randomness),
+        memory=None # Agent memory storage (Optional)
 
     ):
         self.name = name
@@ -23,12 +23,13 @@ class Agent:
         self.model = model
         self.temperature = temperature
         self.agent = None 
-        self.memory = MemorySaver()
+        self.memory = memory
 
     def invoke(self, *args, **kwargs):
         if not self.agent:
             self.initiat_agent()
         
+        print(f"--- Calling {self.name} ---")
         response = self.agent.invoke(*args, **kwargs)
         return response
     
@@ -36,15 +37,15 @@ class Agent:
         if not self.agent:
             self.initiat_agent()
         
+        print(f"--- Calling {self.name} ---")
         for chunk in self.agent.stream(*args, **kwargs):
             yield chunk
 
     def initiat_agent(self):
         llm = get_llm_by_provider(self.model, self.temperature)
-        self.memory = MemorySaver()
         self.agent = create_react_agent(
             llm, 
             tools=self.tools, 
-            checkpointer=self.memory,
-            state_modifier=self.system_prompt
+            state_modifier=self.system_prompt,
+            **({"checkpointer": self.memory} if self.memory else {"checkpointer": False}) # set to False to avoid "MULTIPLE_SUBGRAPHS" error
         )

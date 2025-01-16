@@ -54,6 +54,7 @@ Your primary responsibilities include:
 
 # **IMPORTANT**
 
-- ALWAYS COMMUNICATE WITH ME IN A CLEAR, WELL-FORMATTED MESSAGE USING SIMPLE TONE.
+- ALWAYS COMMUNICATE WITH ME IN A CLEAR, CONSICE, WELL-FORMATTED MESSAGE USING SIMPLE and FAMILIAR TONE.
+- Avoid **lengthy** messages or paragraphs.
 - **Today’s date is: {date_time}**
 """

@@ -1,4 +1,5 @@
 import time
+import sqlite3
 from dotenv import load_dotenv
 from src.channels.telegram import TelegramChannel
 from src.agents.personal_assistant import PersonalAssistant
@@ -6,13 +7,19 @@ from src.agents.personal_assistant import PersonalAssistant
 # Load .env variables
 load_dotenv()
 
+# Initialize sqlite3 DB for saving agent memory
+conn = sqlite3.connect("db/checkpoints.sqlite", check_same_thread=False)
+
 # Use telegram for communicating with the agent
 telegram = TelegramChannel()
 # Use Slack for communicating with the agent
 # slack = SlackChannel()
 
 # Initiate personal assistant
-personal_assistant = PersonalAssistant()
+personal_assistant = PersonalAssistant(conn)
+
+# Configuration for the Langgraph checkpoints, specifying thread ID
+config = {"configurable": {"thread_id": "1"}}
 
 
 def monitor_channel(after_timestamp, config):
@@ -32,6 +39,4 @@ def monitor_channel(after_timestamp, config):
 
 if __name__ == "__main__":
     print("Personal Assistant Manager is running")
-    initial_timestamp = int(time.time())
-    config = {"configurable": {"thread_id": "1"}}
-    monitor_channel(initial_timestamp, config)
+    monitor_channel(int(time.time()), config)

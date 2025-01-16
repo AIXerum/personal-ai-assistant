@@ -1,3 +1,4 @@
+from langgraph.checkpoint.sqlite import SqliteSaver
 from src.agents.base import Agent, AgentsOrchestrator
 from src.prompts import *
 from src.tools.calendar import *
@@ -8,7 +9,10 @@ from src.tools.research import *
 from src.utils import get_current_date_time
 
 class PersonalAssistant:
-    def __init__(self):
+    def __init__(self, db_connection):
+        # Create sqlite checkpointer for managing manager memory
+        self.checkpointer = SqliteSaver(db_connection)
+        
         # Initialize individual agents
         self.email_agent = Agent(
             name="email_agent",
@@ -74,7 +78,8 @@ class PersonalAssistant:
                 self.slack_agent,
                 self.researcher_agent
             ],
-            temperature=0.1
+            temperature=0.1,
+            memory=self.checkpointer # only manager has memory feature
         )
 
         # Initialize the orchestrator

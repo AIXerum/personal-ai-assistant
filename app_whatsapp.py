@@ -1,5 +1,6 @@
 import uvicorn
 import asyncio
+import sqlite3
 from fastapi import FastAPI, Form
 from dotenv import load_dotenv
 from src.channels.whatsapp import WhatsAppChannel
@@ -11,6 +12,9 @@ load_dotenv()
 
 # Initiate FastAPI app
 app = FastAPI()
+
+# Initialize sqlite3 DB for saving agent memory
+conn = sqlite3.connect("db/checkpoints.sqlite", check_same_thread=False)
 
 # Initiate personal assistant instance
 personal_assistant = PersonalAssistant()

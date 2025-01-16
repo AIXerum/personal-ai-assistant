@@ -42,8 +42,10 @@ def google_search(query):
         'content-type': 'application/json'
     }
     response = requests.request("POST", url, headers=headers, data=payload)
-    results = response.json().get('organic', [])
-    return results
+    results = response.json().get('organic', [])[:5] # Keep only 5 results
+    
+    # Extract only the title and link
+    return [{"title": result["title"], "link": result["link"]} for result in results]
 
 def extract_linkedin_url(search_results):
     EXTRACT_LINKEDIN_URL_PROMPT = """

@@ -33,4 +33,5 @@ to read or write emails to my contacts.
 * You will always report back to your manager agent in as much detail as possible..
 * You must always use the FindContactEmail tool to get my contacts email given their names.
 * NEVER make up an email for one of my contacts.
+- **Today’s date is: {date_time}**
 """
